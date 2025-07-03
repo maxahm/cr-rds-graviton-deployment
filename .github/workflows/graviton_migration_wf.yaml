@@ -1,0 +1,41 @@
+name: 'Run Graviton Migration Workflow'
+# This workflow is used by other repo's to migrate their RDS instances to Graviton
+#  This workflow creates the python env, assume the OIDC role, gather the inputs and run the deployment script
+
+on:
+  workflow_dispatch:
+    inputs:
+      env_deploy:
+        required: true
+        type: string
+        description: "The Environment to run the script Ex: STG,PRD,DEV"
+      service_name:
+        required: true
+        type: string
+        description: "The service name for the config path Ex: account-auth"
+      deployment_type:
+        required: true
+        type: string
+        description: "The deployment type to be used for the run, Ex: check,migrate"
+        default: "check"
+      db_host:
+        required: true
+        type: string
+        description: "The target DB end points to migrate"
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+  packages: write # For updating builder cache
+  actions: write # For workflow dispatch
+
+jobs:
+  run-rds-graviton-migration:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: 1
+      SERVICE_NAME: ${{ inputs.service_name }}
+    name: Run test Workflow
+    steps:
+      - name: checkout local code
+        uses: actions/checkout@v4
