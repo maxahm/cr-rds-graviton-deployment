@@ -4,7 +4,8 @@ name: 'Run Graviton Migration Workflow'
 
 on:
   #workflow_call:
-  workflow_dispatch:
+  #workflow_dispatch:
+  pull_request:
     inputs:
       env_deploy:
         required: true
