@@ -3,9 +3,7 @@ name: 'Run Graviton Migration Workflow'
 #  This workflow creates the python env, assume the OIDC role, gather the inputs and run the deployment script
 
 on:
-  #workflow_call:
   workflow_dispatch:
-  #pull_request:
     inputs:
       env_deploy:
         required: true
